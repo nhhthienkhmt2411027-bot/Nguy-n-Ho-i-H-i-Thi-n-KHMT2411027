@@ -1,0 +1,501 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const ExpenseManagerApp());
+}
+
+class ExpenseManagerApp extends StatelessWidget {
+  const ExpenseManagerApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Expense Manager',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const WelcomeScreen(),
+    );
+  }
+}
+
+////////////////////////////////////////////////////////////
+/// WELCOME SCREEN
+////////////////////////////////////////////////////////////
+
+class WelcomeScreen extends StatelessWidget {
+  const WelcomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            children: [
+              const Spacer(),
+
+              Container(
+                width: 120,
+                height: 120,
+                decoration: BoxDecoration(
+                  color: Colors.blue.shade100,
+                  borderRadius: BorderRadius.circular(24),
+                ),
+                child: const Icon(
+                  Icons.account_balance_wallet,
+                  color: Colors.blue,
+                  size: 70,
+                ),
+              ),
+
+              const SizedBox(height: 24),
+
+              const Text(
+                "Expense Manager",
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+
+              const SizedBox(height: 12),
+
+              const Text(
+                "Quản lý chi tiêu cá nhân\nđơn giản và hiệu quả",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey,
+                ),
+              ),
+
+              const Spacer(),
+
+              SizedBox(
+                width: double.infinity,
+                height: 55,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const DashboardScreen(),
+                      ),
+                    );
+                  },
+                  child: const Text(
+                    "Bắt đầu",
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+////////////////////////////////////////////////////////////
+/// DASHBOARD SCREEN
+////////////////////////////////////////////////////////////
+
+class DashboardScreen extends StatelessWidget {
+  const DashboardScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Dashboard"),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.blue,
+        child: const Icon(Icons.add),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => const AddTransactionScreen(),
+            ),
+          );
+        },
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.blue,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: const Column(
+                children: [
+                  Text(
+                    "Số dư hiện tại",
+                    style: TextStyle(
+                      color: Colors.white70,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    "10,500,000 VNĐ",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 20),
+
+            Row(
+              children: [
+                Expanded(
+                  child: Card(
+                    color: Colors.green.shade100,
+                    child: const Padding(
+                      padding: EdgeInsets.all(16),
+                      child: Column(
+                        children: [
+                          Icon(
+                            Icons.arrow_downward,
+                            color: Colors.green,
+                          ),
+                          SizedBox(height: 8),
+                          Text("Thu nhập"),
+                          Text(
+                            "15,000,000",
+                            style: TextStyle(
+                              color: Colors.green,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Card(
+                    color: Colors.red.shade100,
+                    child: const Padding(
+                      padding: EdgeInsets.all(16),
+                      child: Column(
+                        children: [
+                          Icon(
+                            Icons.arrow_upward,
+                            color: Colors.red,
+                          ),
+                          SizedBox(height: 8),
+                          Text("Chi tiêu"),
+                          Text(
+                            "4,500,000",
+                            style: TextStyle(
+                              color: Colors.red,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 20),
+
+            const Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Giao dịch gần đây",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 10),
+
+            const Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    ListTile(
+                      leading: Icon(Icons.restaurant),
+                      title: Text("Ăn uống"),
+                      subtitle: Text("01/10/2026"),
+                      trailing: Text(
+                        "-120.000 VNĐ",
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Divider(),
+                    ListTile(
+                      leading: Icon(Icons.shopping_bag),
+                      title: Text("Mua sắm"),
+                      subtitle: Text("30/09/2026"),
+                      trailing: Text(
+                        "-300.000 VNĐ",
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Divider(),
+                    ListTile(
+                      leading: Icon(Icons.attach_money),
+                      title: Text("Lương"),
+                      subtitle: Text("28/09/2026"),
+                      trailing: Text(
+                        "+15.000.000 VNĐ",
+                        style: TextStyle(
+                          color: Colors.green,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+////////////////////////////////////////////////////////////
+/// ADD TRANSACTION SCREEN
+////////////////////////////////////////////////////////////
+
+class AddTransactionScreen extends StatefulWidget {
+  const AddTransactionScreen({super.key});
+
+  @override
+  State<AddTransactionScreen> createState() =>
+      _AddTransactionScreenState();
+}
+
+class _AddTransactionScreenState
+    extends State<AddTransactionScreen> {
+  bool isExpense = true;
+
+  String selectedCategory = "Ăn uống";
+
+  final amountController = TextEditingController();
+  final noteController = TextEditingController();
+
+  DateTime selectedDate = DateTime.now();
+
+  Future<void> pickDate() async {
+    DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2023),
+      lastDate: DateTime(2030),
+    );
+
+    if (picked != null) {
+      setState(() {
+        selectedDate = picked;
+      });
+    }
+  }
+
+  String formatDate(DateTime date) {
+    return "${date.day}/${date.month}/${date.year}";
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Thêm giao dịch"),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            DropdownButtonFormField<String>(
+              value: selectedCategory,
+              decoration: const InputDecoration(
+                labelText: "Danh mục",
+                border: OutlineInputBorder(),
+              ),
+              items: const [
+                DropdownMenuItem(
+                  value: "Ăn uống",
+                  child: Text("Ăn uống"),
+                ),
+                DropdownMenuItem(
+                  value: "Mua sắm",
+                  child: Text("Mua sắm"),
+                ),
+                DropdownMenuItem(
+                  value: "Di chuyển",
+                  child: Text("Di chuyển"),
+                ),
+              ],
+              onChanged: (value) {
+                setState(() {
+                  selectedCategory = value!;
+                });
+              },
+            ),
+
+            const SizedBox(height: 16),
+
+            TextField(
+              controller: amountController,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                labelText: "Số tiền",
+                border: OutlineInputBorder(),
+              ),
+            ),
+
+            const SizedBox(height: 16),
+
+            TextField(
+              readOnly: true,
+              onTap: pickDate,
+              decoration: InputDecoration(
+                labelText: "Ngày giao dịch",
+                border: const OutlineInputBorder(),
+                hintText: formatDate(selectedDate),
+                suffixIcon: const Icon(Icons.calendar_today),
+              ),
+            ),
+
+            const SizedBox(height: 16),
+
+            TextField(
+              controller: noteController,
+              maxLines: 3,
+              decoration: const InputDecoration(
+                labelText: "Ghi chú",
+                border: OutlineInputBorder(),
+              ),
+            ),
+
+            const SizedBox(height: 24),
+
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => EditTransactionScreen(
+                      category: selectedCategory,
+                      amount: amountController.text,
+                      note: noteController.text,
+                      date: formatDate(selectedDate),
+                    ),
+                  ),
+                );
+              },
+              child: const Text("Lưu"),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+////////////////////////////////////////////////////////////
+/// EDIT TRANSACTION SCREEN
+////////////////////////////////////////////////////////////
+
+class EditTransactionScreen extends StatelessWidget {
+  final String category;
+  final String amount;
+  final String note;
+  final String date;
+
+  const EditTransactionScreen({
+    super.key,
+    required this.category,
+    required this.amount,
+    required this.note,
+    required this.date,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Sửa giao dịch"),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            TextFormField(
+              initialValue: category,
+              decoration: const InputDecoration(
+                labelText: "Danh mục",
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 16),
+            TextFormField(
+              initialValue: amount,
+              decoration: const InputDecoration(
+                labelText: "Số tiền",
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 16),
+            TextFormField(
+              initialValue: date,
+              decoration: const InputDecoration(
+                labelText: "Ngày giao dịch",
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 16),
+            TextFormField(
+              initialValue: note,
+              maxLines: 3,
+              decoration: const InputDecoration(
+                labelText: "Ghi chú",
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const Spacer(),
+            ElevatedButton(
+              onPressed: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("Đã cập nhật giao dịch"),
+                  ),
+                );
+              },
+              child: const Text("Lưu"),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
